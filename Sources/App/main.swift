@@ -17,7 +17,28 @@ drop.get("hello","vapor") { request in
 }
 
 drop.get("chat", Int.self) { request, chat in
-    return try JSON(node: ["person","person\(chat)"])
+    return try JSON(node: ["person","person-\(chat)"])
+}
+
+drop.post("post") { request in
+    guard let name = request.data["name"]?.string else {
+        throw Abort.badRequest
+    }
+    return try JSON(node: ["message":"Hello \(name)"])
+}
+
+drop.get("hello-template") { request in
+    return try drop.view.make("hello", Node(node:["name":"willie"]))
+}
+
+drop.get("hello-template2", String.self) { request, name in
+    return try drop.view.make("hello", Node(node:["name":name]))
+    
+}
+
+drop.get("hello-template3") { request in
+    let users = try ["willie","vickie", "athour"].makeNode()
+    return try drop.view.make("hello3", Node(node: ["users":users]))
 }
 
 drop.resource("posts", PostController())
