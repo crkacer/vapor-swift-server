@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<title>Page Title</title>
-</head>
-<body>
-
-<h1>This is a Hello Template</h1>
-#loop(users, "user") {
-    <p>Hello, #(user) <a href="mailto:#(user.mail)">[Email]</a></p>
+#extend("master")
+#export("head") {
+    #embed("title")
+}
+#export("body") {
+    <h1>This is a Hello Template</h1>
+    #loop(users, "user") {
+        <p>Hello, #(user.name) <a href="mailto:#(user.mail)">[Email]</a></p>
+    }
 }
 
-
-</body>
-</html>
