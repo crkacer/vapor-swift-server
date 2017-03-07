@@ -16,10 +16,7 @@ drop.get("version") { request in
 
 drop.get("model") { reuest in
     let acronym = Acronym(short: "AFK", long: "Away From Keyboard")
-    return try JSON(node: [
-        "short": acronym.short,
-        "long" : acronym.long
-    ])
+    return try acronym.makeJSON()
 }
 //===================Simple Get request================================//
 
