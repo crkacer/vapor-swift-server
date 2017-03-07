@@ -34,4 +34,8 @@ final class Acronym: Model {
     static func revert(_ database: Database) throws {
         try database.delete("acronyms")
     }
+    // Command line for vapor create/prepare database and drop database:
+    // vapor build
+    // vapor run prepare -> create
+    // vapor run prepare --revert -> drop
 }
