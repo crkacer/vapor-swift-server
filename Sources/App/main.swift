@@ -13,6 +13,14 @@ drop.get("version") { request in
         return "No db connection"
     }
 }
+
+drop.get("model") { reuest in
+    let acronym = Acronym(short: "AFK", long: "Away From Keyboard")
+    return try JSON(node: [
+        "short": acronym.short,
+        "long" : acronym.long
+    ])
+}
 //===================Simple Get request================================//
 
 //let drop = Droplet()
