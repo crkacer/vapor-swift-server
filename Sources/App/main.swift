@@ -2,6 +2,7 @@ import Vapor
 import VaporPostgreSQL
 
 let drop = Droplet(
+    preparations: [Acronym.self],
     providers: [VaporPostgreSQL.Provider.self]
 )
 
@@ -14,9 +15,15 @@ drop.get("version") { request in
     }
 }
 
-drop.get("model") { reuest in
+drop.get("model") { request in
     let acronym = Acronym(short: "AFK", long: "Away From Keyboard")
     return try acronym.makeJSON()
+}
+
+drop.get("test") { request in
+    var acronym = Acronym(short: "AFK", long: "Away From Keyboard")
+    try acronym.save()
+    return try JSON(node: Acronym.all().makeNode())
 }
 //===================Simple Get request================================//
 
