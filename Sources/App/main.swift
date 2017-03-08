@@ -35,6 +35,16 @@ drop.post("new") { request in
 drop.get("all") { request in
     return try JSON(node: Acronym.all().makeNode())
 }
+
+drop.get("first") { request in
+    return try JSON(node: Acronym.query().first()?.makeNode())
+}
+drop.get("afk") { request in
+    return try JSON(node: Acronym.query().filter("short","AFK").all().makeNode())
+}
+drop.get("no-afk") { request in
+    return try JSON(node: Acronym.query().filter("short", .notEquals, "AFK").all().makeNode())
+}
 //===================Simple Get request================================//
 
 //let drop = Droplet()
