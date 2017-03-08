@@ -8,6 +8,10 @@ final class TILController {
     }
     
     func indexView(request: Request) throws -> ResponseRepresentable {
-        return try JSON(node: Acronym.all().makeNode())
+        let acronyms = try Acronym.all().makeNode()
+        let parameters = try Node(node: [
+            "acronyms": acronyms,
+        ])
+        return try drop.view.make("index", parameters)
     }
 }
