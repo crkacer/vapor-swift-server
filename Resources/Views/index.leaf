@@ -31,6 +31,9 @@
         <p><span>#(acronym.long)</span></p>
     </div>
     <div class="three columns">
+        <form action="/til/#(acronym.id)/delete" method="post">
+            <input type="submit" value="Delete"/>
+        </form>
     </div>
 </div>
 }
