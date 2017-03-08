@@ -45,6 +45,21 @@ drop.get("afk") { request in
 drop.get("no-afk") { request in
     return try JSON(node: Acronym.query().filter("short", .notEquals, "AFK").all().makeNode())
 }
+drop.get("update-first") { request in
+    guard var first = try Acronym.query().first(),
+        let long = request.data["long"]?.string else {
+            throw Abort.badRequest
+    }
+    first.long = long
+    try first.save()
+    return first
+    //localhost:8080/update-first?long=
+}
+drop.get("delete-afks") { request in
+    let query = try Acronym.query().filter("short","AFK")
+    try query.delete()
+    return try JSON(node: Acronym.all().makeNode())
+}
 //===================Simple Get request================================//
 
 //let drop = Droplet()
