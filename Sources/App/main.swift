@@ -5,6 +5,9 @@ let drop = Droplet()
 try drop.addProvider(VaporPostgreSQL.Provider)
 drop.preparations += Acronym.self
 
+(drop.view as? LeafRenderer)?.stem.cache = nil
+// clear View cache
+
 let controller = TILController()
 controller.addRoutes(drop: drop)
 
