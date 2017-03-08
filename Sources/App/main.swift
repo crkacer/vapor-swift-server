@@ -31,6 +31,10 @@ drop.post("new") { request in
     try acronym.save()
     return acronym
 }
+
+drop.get("all") { request in
+    return try JSON(node: Acronym.all().makeNode())
+}
 //===================Simple Get request================================//
 
 //let drop = Droplet()
