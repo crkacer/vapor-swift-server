@@ -14,6 +14,8 @@ controller.addRoutes(drop: drop)
 let basic = BasicController()
 basic.addRoutes(drop: drop)
 
+let acronym = AcronymController()
+drop.resource("acronyms", acronym)
 
 
 //===================Simple Get request================================//
