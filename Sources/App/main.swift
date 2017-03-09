@@ -11,60 +11,11 @@ drop.preparations += Acronym.self
 let controller = TILController()
 controller.addRoutes(drop: drop)
 
-drop.get("version") { request in
-    if let db = drop.database?.driver as? PostgreSQLDriver {
-        let version = try db.raw("SELECT version()")
-        return try JSON(node:version)
-    } else {
-        return "No db connection"
-    }
-}
+let basic = BasicController()
+basic.addRoutes(drop: drop)
 
-drop.get("model") { request in
-    let acronym = Acronym(short: "AFK", long: "Away From Keyboard")
-    return try acronym.makeJSON()
-}
 
-drop.get("test") { request in
-    var acronym = Acronym(short: "AFK", long: "Away From Keyboard")
-    try acronym.save()
-    return try JSON(node: Acronym.all().makeNode())
-}
 
-drop.post("new") { request in
-    var acronym = try Acronym(node: request.json)
-    try acronym.save()
-    return acronym
-}
-
-drop.get("all") { request in
-    return try JSON(node: Acronym.all().makeNode())
-}
-
-drop.get("first") { request in
-    return try JSON(node: Acronym.query().first()?.makeNode())
-}
-drop.get("afk") { request in
-    return try JSON(node: Acronym.query().filter("short","AFK").all().makeNode())
-}
-drop.get("no-afk") { request in
-    return try JSON(node: Acronym.query().filter("short", .notEquals, "AFK").all().makeNode())
-}
-drop.get("update-first") { request in
-    guard var first = try Acronym.query().first(),
-        let long = request.data["long"]?.string else {
-            throw Abort.badRequest
-    }
-    first.long = long
-    try first.save()
-    return first
-    //localhost:8080/update-first?long=
-}
-drop.get("delete-afks") { request in
-    let query = try Acronym.query().filter("short","AFK")
-    try query.delete()
-    return try JSON(node: Acronym.all().makeNode())
-}
 //===================Simple Get request================================//
 
 //let drop = Droplet()
